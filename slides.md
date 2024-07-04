@@ -7,6 +7,9 @@ style: |
   table {
     font-size: 0.75em;
   }
+  section {
+    font-size: 31px;
+  }
 
 
 ---
@@ -54,12 +57,12 @@ Are InChIs stable across version 1.06 and version 1.07?
 
 | | Compound | Compound 3D | Substance |
 |---|---|---|---|
-| N structures passed<sup>a</sup> | 114,726,411 | 23,487,296 | 306,711,303 |
-| N structures failed<sup>b</sup> | 0 | 0 | 2 |
-| N structures error | 0 | 0 | 0 |
-| percentage failed<sup>c</sup> | 0 | 0 | 0.00000064 |
-| run-time total<sup>d</sup> | 402 min (6 hrs, 42 min) | 106 min (1 hr, 46 min) | 585 min (9 hrs, 45 min) |
-| avg run-time per structure<sup>e</sup> | 0.21 ms | 0.27 ms | 0.114 ms |
+| N structures<sup>e</sup> | 114,726,411 | 23,487,296 | 306,711,305 |
+| N structures passed<sup>f</sup> | 114,726,411 | 23,487,296 | 306,711,303 |
+| N structures failed<sup>g</sup> | 0 | 0 | 2 |
+| percentage failed<sup>h</sup> | 0 | 0 | 0.00000064 |
+| run-time total<sup>i</sup> | 402 min (6 hrs, 42 min) | 106 min (1 hr, 46 min) | 585 min (9 hrs, 45 min) |
+| avg run-time per structure<sup>j</sup> | 0.21 ms | 0.27 ms | 0.114 ms |
 
 
 ---
@@ -75,12 +78,14 @@ Are InChIs canonical?
 
 | | Compound | Compound 3D | Substance |
 |---|---|---|---|
-| N structures passed<sup>a</sup> | n/a | 23,487,290 | 289,776,775 |
-| N structures failed<sup>b</sup> | n/a | 6 | 2,131 |
-| N structures error | n/a | 0 | 16,932,378<sup>c,d</sup> + 21<sup>e,f</sup> = 16,932,399 |
-| percentage failed<sup>g</sup> | n/a | 0.000026 | 0.000735 |
-| run-time total<sup>h</sup> | n/a | 389 min (6 hrs, 29 min) | 4,063 min (2 days, 18 hrs, 43 min) |
-| avg run-time per structure<sup>i</sup> | n/a | 0.98 ms | 0.84 ms |
+| N structures<sup>k</sup> | 114,726,411 | 23,487,296 | 306,711,305 |
+| N structures missing <sup>l</sup> | 0 | 0 | 16,932,378 |
+| N structures error <sup>m</sup> | n/a | 0 |  21 |
+| N structures passed<sup>n</sup> | n/a | 23,487,290 | 289,776,775 |
+| N structures failed<sup>o</sup> | n/a | 6 | 2,131 |
+| percentage failed<sup>p</sup> | n/a | 0.000026 | 0.000735 |
+| run-time total<sup>q</sup> | n/a | 389 min (6 hrs, 29 min) | 4,063 min (2 days, 18 hrs, 43 min) |
+| avg run-time per structure<sup>r</sup> | n/a | 0.98 ms | 0.84 ms |
 
 
 ---
@@ -95,26 +100,22 @@ d) `totalCount=0; for file in ./*.sqlite; do count=$(sqlite3 "$file" "SELECT COU
 ---
 # Details Regression
 
-a) N structures - (N structures error + N structures failed)
-b) `grep -o "test failed" ./<log-name>.log | wc -l`
-c) N structures failed / (N structures - N structures error) * 100
-d) last timestamp - first timestamp from logs
-e) run-time total / (N structures passed + N structures failed) * 60000
+e) see a)
+f) N structures - (N structures missing + N structures error + N structures failed)
+g) `grep -o "test failed" ./<log-name>.log | wc -l`
+h) N structures failed / (N structures - (N structures missing + N structures error)) * 100
+i) last timestamp - first timestamp from logs
+j) run-time total / (N structures passed + N structures failed) * 60000
 
 
 ---
 # Details Invariance
 
-a) N structures - (N structures error + N structures failed)
-b) `grep -o "test failed" ./<log-name>.log | wc -l`
-c) `grep -o "test didn't run" ./<log-name>.log | wc -l`
-d) empty molfiles; see e.g., https://pubchem.ncbi.nlm.nih.gov/rest/pug/substance/sid/2167/record/SDF
-
----
-# Details Invariance (continued)
-
-e) `grep -o "RuntimeError" ./<log-name>.log | wc -l`
-f) InChI failed to process molfiles
-g) N structures failed / (N structures - N structures error) * 100
-h) last timestamp - first timestamp from logs
-i) run-time total / (N structures passed + N structures failed) * 60000
+k) see a)
+l) `grep -o "test didn't run" ./<log-name>.log | wc -l`; empty molfiles; see e.g., https://pubchem.ncbi.nlm.nih.gov/rest/pug/substance/sid/2167/record/SDF
+m) `grep -o "RuntimeError" ./<log-name>.log | wc -l`; InChI failed to process molfiles
+n) see f)
+o) see g)
+p) see h)
+q) see i)
+r) see j)
