@@ -13,7 +13,7 @@ style: |
 
 
 ---
-# Testing InChI v1.7.0
+# Testing InChI v1.07.0
 
 ## Jan C. Brammer, RWTH Aachen
 
@@ -25,9 +25,10 @@ style: |
 ---
 # Test infrastructure
 
-* InChI 1.7.0 compiled with GCC 14.1.0
+* InChI 1.07.0 compiled with GCC 14.1.0
 * Debian bookworm
 * 16 physical cores
+* InChI API's `MakeINCHIFromMolfileText`, `GetINCHIKeyFromINCHI` (without parameters)
 * https://github.com/IUPAC-InChI/InChI/tree/main/INCHI-1-TEST
 
 
@@ -62,7 +63,7 @@ Are InChIs stable across version 1.06 and version 1.07?
 | N structures failed<sup>g</sup> | 0 | 0 | 2 |
 | percentage failed<sup>h</sup> | 0 | 0 | 0.00000064 |
 | run-time total<sup>i</sup> | 402 min (6 hrs, 42 min) | 106 min (1 hr, 46 min) | 585 min (9 hrs, 45 min) |
-| avg run-time per structure<sup>j</sup> | 0.21 ms | 0.27 ms | 0.114 ms |
+| avg run-time per structure<sup>j</sup> | 0.21 ms | 0.27 ms | 0.10 ms |
 
 
 ---
@@ -86,6 +87,34 @@ Are InChIs canonical?
 | percentage failed<sup>p</sup> | n/a | 0.000026 | 0.000735 |
 | run-time total<sup>q</sup> | n/a | 389 min (6 hrs, 29 min) | 4,063 min (2 days, 18 hrs, 43 min) |
 | avg run-time per structure<sup>r</sup> | n/a | 0.98 ms | 0.84 ms |
+
+
+
+---
+# Example Invariance Failure Substance
+
+https://pubchem.ncbi.nlm.nih.gov/substance/140565978
+
+10 permutations resulted in 2 InChI variants.
+Below, the identical /c and /p layers are omitted to make difference in /h layer more salient.
+
+```
+InChI=1S/C55H53N3O14S2/h7,9-10,13-14,16-25,27-30H,6,8,11-12,15,26,31H2,1-5H3,(H5-,56,59,61,62,63,64,65,66,67,68,69)
+InChI=1S/C55H53N3O14S2/h7,9-10,13-14,16-25,27-30H,6,8,11-12,15,26,31H2,1-5H3,(H5-,56,59,60,61,62,63,64,65,66,67,68,69)
+```
+
+
+---
+# Example Invariance Failure Compound 3D
+
+https://pubchem.ncbi.nlm.nih.gov/compound/6401426
+
+10 permutations resulted in 2 InChI variants.
+
+```
+InChI=1S/C10H13N6O2/c1-3-7-6(2)14-16-5-12-15(4-8(17)13-11)10(16)9(7)18/h5,11,18H,3-4H2,1-2H3/q-1/p+1
+InChI=1S/C10H14N6O2/c1-3-7-6(2)14-16-5-12-15(4-8(17)13-11)10(16)9(7)18/h5,11,14,18H,3-4H2,1-2H3
+```
 
 
 ---
